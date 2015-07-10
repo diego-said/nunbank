@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+
+
+    <color name="bill_item_header">#b8b8b8</color>
+    <color name="bill_item_highlight">#c9c9c9</color>
+    <color name="bill_item_text">#a6a6a6</color>
+    <color name="bill_item_date">#dedede</color>
+    
+</resources>

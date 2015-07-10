@@ -2,4 +2,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Bill interface -->
+    <dimen name="bill_item_height">30dp</dimen>
+    <dimen name="bill_item_height_half">15dp</dimen>
+    <dimen name="bill_item_circle_size">10dp</dimen>
+    <dimen name="bill_item_bar_width">2dp</dimen>
+    <dimen name="bill_item_text_size">10sp</dimen>
+
+
 </resources>

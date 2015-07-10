@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bill_item_height"
+    android:background="#f5f5f5"
+    >
+
+    <RelativeLayout
+        android:id="@+id/billItemHighlight"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true">
+        <View
+            android:id="@+id/billItemCircle"
+            android:layout_width="@dimen/bill_item_circle_size"
+            android:layout_height="@dimen/bill_item_circle_size"
+            android:background="@drawable/bill_item_circle"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <View
+            android:id="@+id/billItemBar"
+            android:layout_width="@dimen/bill_item_bar_width"
+            android:layout_height="match_parent"
+            android:background="@color/bill_item_highlight"
+            android:layout_centerHorizontal="true"
+            />
+
+        <View
+            android:id="@+id/billItemBarHalf"
+            android:layout_width="@dimen/bill_item_bar_width"
+            android:layout_height="@dimen/bill_item_height_half"
+            android:background="@color/bill_item_highlight"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/billItemDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="27 JUL"
+        android:textColor="@color/bill_item_date"
+        android:textSize="@dimen/bill_item_text_size"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/billItemHighlight"
+        android:layout_toEndOf="@+id/billItemHighlight"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/billItemDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Claro Recarga"
+        android:layout_gravity="center"
+        android:textColor="@color/bill_item_text"
+        android:textSize="@dimen/bill_item_text_size"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/billItemDate"
+        android:layout_toEndOf="@+id/billItemDate"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/billItemValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12,70"
+        android:layout_gravity="center"
+        android:textColor="@color/bill_item_text"
+        android:textSize="@dimen/bill_item_text_size"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
