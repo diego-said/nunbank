@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/bill_item_height"
-    android:background="#f5f5f5"
+    android:background="@color/bill_item_background"
     >
 
     <RelativeLayout
@@ -13,8 +13,8 @@
         android:layout_alignParentLeft="true">
         <View
             android:id="@+id/billItemCircle"
-            android:layout_width="@dimen/bill_item_circle_size"
-            android:layout_height="@dimen/bill_item_circle_size"
+            android:layout_width="@dimen/bill_item_highlight_size"
+            android:layout_height="@dimen/bill_item_highlight_size"
             android:background="@drawable/bill_item_circle"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"

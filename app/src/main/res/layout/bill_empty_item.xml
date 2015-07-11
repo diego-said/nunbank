@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bill_item_background"
+    >
+
+    <RelativeLayout
+        android:id="@+id/billItemHighlight"
+        android:layout_width="@dimen/bill_item_highlight_size"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true">
+
+        <View
+            android:id="@+id/billItemBar"
+            android:layout_width="@dimen/bill_item_bar_width"
+            android:layout_height="match_parent"
+            android:background="@color/bill_item_highlight"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
