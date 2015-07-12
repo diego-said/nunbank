@@ -33,18 +33,16 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import br.com.dotz.R;
-import br.com.dotz.data.UserProfileController;
-import br.com.dotz.service.util.LocalBroadcastMessages;
-import br.com.dotz.service.util.ServiceMessages;
+import br.com.doublelogic.nubanktest.R;
+import br.com.doublelogic.nubanktest.service.util.LocalBroadcastMessages;
+import br.com.doublelogic.nubanktest.service.util.ServiceMessages;
 
 /**
- * Created by diego on 12/18/14.
+ * Created by diegoalvessaidsimao on 11/07/15.
  */
 public abstract class AbstractRestAPI {
 
     private static final int HTTP_OK = 200;
-    private static final String ACCESS_TOKEN_KEY = "Authorization-Token";
 
     protected final Context context;
 
@@ -55,50 +53,36 @@ public abstract class AbstractRestAPI {
     protected AbstractRestAPI(Context context) {
         this.context = context;
         backendAPI = context.getString(R.string.backend_api);
-        // back-end pattern 2015-04-28T15:58:54.8115593-03:00
-        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
+
+        // ISO 8601 international standard date format
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ").create();
     }
 
     protected abstract String getTag();
 
-    protected String requestThroughHttpGet(String url, boolean sendUserToken) {
+    protected String requestThroughHttpGet(String url) {
         // Prepare a request object
         HttpGet httpGet = new HttpGet(url);
-
-        if(sendUserToken) {
-            // send user token
-            httpGet.addHeader(ACCESS_TOKEN_KEY, UserProfileController.getInstance().getToken());
-        }
 
         // Execute the request
         return requestHttp(httpGet);
     }
 
-    protected String requestThroughHttpDelete(String url, boolean sendUserToken) {
+    protected String requestThroughHttpDelete(String url) {
         // Prepare a request object
         HttpDelete httpDelete = new HttpDelete(url);
-
-        if(sendUserToken) {
-            // send user token
-            httpDelete.addHeader(ACCESS_TOKEN_KEY, UserProfileController.getInstance().getToken());
-        }
 
         // Execute the request
         return requestHttp(httpDelete);
     }
 
-    protected String requestThroughHttpPost(String url, boolean sendUserToken) {
-        return requestThroughHttpPost(url, sendUserToken, null);
+    protected String requestThroughHttpPost(String url) {
+        return requestThroughHttpPost(url, null);
     }
 
-    protected String requestThroughHttpPost(String url, boolean sendUserToken, List<NameValuePair> params) {
+    protected String requestThroughHttpPost(String url, List<NameValuePair> params) {
         // Prepare a request object
         HttpPost httpPost = new HttpPost(url);
-
-        if(sendUserToken) {
-            // send user token
-            httpPost.addHeader(ACCESS_TOKEN_KEY, UserProfileController.getInstance().getToken());
-        }
 
         // parameters
         if(params != null) {
@@ -113,16 +97,11 @@ public abstract class AbstractRestAPI {
         return requestHttp(httpPost);
     }
 
-    protected String requestThroughHttpPostJSON(String url, boolean sendUserToken, List<NameValuePair> params) {
+    protected String requestThroughHttpPostJSON(String url, List<NameValuePair> params) {
         // Prepare a request object
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
-
-        if(sendUserToken) {
-            // send user token
-            httpPost.addHeader(ACCESS_TOKEN_KEY, UserProfileController.getInstance().getToken());
-        }
 
         // parameters
         if(params != null) {
@@ -184,13 +163,13 @@ public abstract class AbstractRestAPI {
             }
         } catch (ClientProtocolException e) {
             Log.e(getTag(), e.getMessage(), e);
-            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.CONNECTION_PROBLEM, context);
+            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
         } catch (IOException e) {
             Log.e(getTag(), e.getMessage(), e);
-            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.CONNECTION_PROBLEM, context);
+            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
         } catch (Exception e) {
             Log.e(getTag(), e.getMessage(), e);
-            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.CONNECTION_PROBLEM, context);
+            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
         } finally {
             if(in != null) {
                 try {
@@ -232,25 +211,16 @@ public abstract class AbstractRestAPI {
                 object = gson.fromJson(result, JsonObject.class);
 
                 if(object != null) {
-                    //TODO verificar o tratamento de erro do backend
-//                    JsonPrimitive code = object.getAsJsonPrimitive("code");
-//                    JsonPrimitive message = object.getAsJsonPrimitive("message");
-//
-//                    if(ApiMessages.OK.getCode() == code.getAsInt()) {
-//                        return object;
-//                    } else {
-//                        Log.w(getTag(), "API error[" + code.getAsInt() + "]: " + message.getAsString());
-//                        ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.CONNECTION_PROBLEM, context);
-//                    }
+                    // check here any problem with backend's info
                     return object;
                 } else {
                     Log.w(getTag(), "JSON parser error[" + result + "]");
-                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.CONNECTION_PROBLEM, context);
+                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
                 }
             }
         } catch (Exception e) {
             Log.e(getTag(), e.getMessage(), e);
-            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.CONNECTION_PROBLEM, context);
+            ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
         }
         return object;
     }

@@ -1,10 +1,75 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.doublelogic.nubanktest.view.BillInterfaceFragment">
+    tools:context="br.com.doublelogic.nubanktest.view.BillInterfaceFragment"
+    android:scrollbars="vertical"
+    android:background="@android:color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="&#9650;" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <RelativeLayout
+            android:id="@+id/billHeaderHighlight"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bill_header_highlight_size"
+            android:background="@color/bill_red"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/billHeaderValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/bill_header_value_size"
+                android:textStyle="bold"
+                android:text="R$ 3.670,22"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                 />
+
+            <TextView
+                android:id="@+id/billHeaderDueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/bill_header_due_date_size"
+                android:textStyle="normal"
+                android:text="Vencimento 15 JUN"
+                android:layout_below="@+id/billHeaderValue"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/billHeaderDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/bill_header_desc_size"
+                android:textStyle="normal"
+                android:text="FATURA PARCIAL"
+                android:layout_below="@+id/billHeaderDueDate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"/>
+
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_default_red_selector"
+            android:text="GERAR BOLETO"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:layout_below="@+id/billHeaderHighlight"
+            android:textColor="@drawable/btn_default_red_text_selector"
+            android:layout_margin="20dp"
+            />
+
+
+    </RelativeLayout>
+
+</ScrollView>

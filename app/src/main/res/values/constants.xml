@@ -4,7 +4,4 @@
     <integer name="connection_timeout">10000</integer>
     <integer name="socket_timeout">30000</integer>
 
-    <!-- View: Ranking -> Cell ranking -->
-    <integer name="cell_ranking_max_itens">25</integer>
-
 </resources>

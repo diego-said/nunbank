@@ -23,6 +23,6 @@
 
 <!-- default -->
 
-<item android:color="@color/bill_red" />
+<item android:color="@color/bill_blue" />
 
 </selector>
