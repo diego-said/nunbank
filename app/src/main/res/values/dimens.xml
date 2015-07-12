@@ -10,6 +10,8 @@
     <dimen name="bill_header_due_date_size">18sp</dimen>
     <dimen name="bill_header_desc_size">12sp</dimen>
 
+    <dimen name="bill_statement_text_size">14sp</dimen>
+
     <dimen name="bill_item_height">30dp</dimen>
     <dimen name="bill_item_height_half">15dp</dimen>
     <dimen name="bill_item_highlight_size">10dp</dimen>
