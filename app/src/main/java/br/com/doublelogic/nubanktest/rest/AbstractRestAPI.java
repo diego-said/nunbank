@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.apache.http.HttpEntity;
@@ -55,7 +56,8 @@ public abstract class AbstractRestAPI {
         backendAPI = context.getString(R.string.backend_api);
 
         // ISO 8601 international standard date format
-        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ").create();
+//        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ").create();
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     }
 
     protected abstract String getTag();
@@ -204,11 +206,11 @@ public abstract class AbstractRestAPI {
         return sb.toString();
     }
 
-    protected JsonObject parseHttpRequestResult(String result) {
-        JsonObject object = null;
+    protected JsonArray parseHttpRequestResult(String result) {
+        JsonArray object = null;
         try {
             if(result != null) {
-                object = gson.fromJson(result, JsonObject.class);
+                object = gson.fromJson(result, JsonArray.class);
 
                 if(object != null) {
                     // check here any problem with backend's info
