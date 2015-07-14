@@ -6,7 +6,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -55,8 +54,7 @@ public abstract class AbstractRestAPI {
         this.context = context;
         backendAPI = context.getString(R.string.backend_api);
 
-        // ISO 8601 international standard date format
-//        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ").create();
+        // ISO 8601 date format
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     }
 
@@ -147,8 +145,9 @@ public abstract class AbstractRestAPI {
         InputStream in = null;
         try {
             response = httpclient.execute(request);
+            int statusCode = response.getStatusLine().getStatusCode();
 
-            if (HTTP_OK == response.getStatusLine().getStatusCode()) {
+            if (HTTP_OK == statusCode) {
 
                 HttpEntity entity = response.getEntity();
 
@@ -161,6 +160,13 @@ public abstract class AbstractRestAPI {
                     return result;
                 }
             } else {
+                if(statusCode >= 400 && statusCode < 500) {
+                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.HTTP_400_ERROR, context);
+                } else if(statusCode >= 500 && statusCode < 600) {
+                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.HTTP_500_ERROR, context);
+                } else {
+                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
+                }
                 Log.w(getTag(), "Http error: " + response.getStatusLine().getStatusCode());
             }
         } catch (ClientProtocolException e) {
@@ -217,7 +223,7 @@ public abstract class AbstractRestAPI {
                     return object;
                 } else {
                     Log.w(getTag(), "JSON parser error[" + result + "]");
-                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, context);
+                    ServiceMessages.sendBroadcastMessage(LocalBroadcastMessages.REST.JSON_PARSER_ERROR, context);
                 }
             }
         } catch (Exception e) {

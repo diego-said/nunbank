@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.doublelogic.nubanktest.view.BillInterfaceFragment"
+    tools:context="br.com.doublelogic.nubanktest.view.billing.BillInterfaceFragment"
     android:scrollbars="vertical"
     android:background="@android:color/white">
 
@@ -234,7 +234,7 @@
         </RelativeLayout>
 
         <ListView
-            android:id="@android:id/list"
+            android:id="@+id/listBillItems"
             android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

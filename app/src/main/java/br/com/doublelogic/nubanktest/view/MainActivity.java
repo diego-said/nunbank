@@ -1,4 +1,4 @@
-package br.com.doublelogic.nubanktest;
+package br.com.doublelogic.nubanktest.view;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.crashlytics.android.Crashlytics;
 
+import br.com.doublelogic.nubanktest.R;
 import br.com.doublelogic.nubanktest.service.BillingService;
 import io.fabric.sdk.android.Fabric;
 

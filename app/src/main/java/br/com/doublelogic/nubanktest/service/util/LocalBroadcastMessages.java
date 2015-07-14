@@ -12,6 +12,9 @@ public class LocalBroadcastMessages {
 
     public class REST {
         public static final String CONNECTION_PROBLEM = "connectionProblem";
+        public static final String HTTP_400_ERROR = "connectionProblem";
+        public static final String HTTP_500_ERROR = "connectionProblem";
+        public static final String JSON_PARSER_ERROR = "jsonParserError";
     }
 
     public class SERVICE {
