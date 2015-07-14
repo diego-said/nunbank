@@ -182,7 +182,7 @@
             android:textStyle="normal"
             android:textSize="16sp"
             android:layout_below="@+id/billStatement"
-            android:textColor="@drawable/btn_default_red_text_selector"
+            android:textColor="@color/btn_default_red_text_selector"
             android:layout_margin="20dp"
             />
 

@@ -9,9 +9,10 @@
     <string name="action_settings">Settings</string>
 
     <string name="bill_due_date_desc">Vencimento %s</string>
-    <string name="bill_date_range">DE %s ATÉ %s</string>
+    <string name="bill_date_range">DE %1$s ATÉ %2$s</string>
     <string name="bill_statement_month">Gastos do mês</string>
     <string name="bill_not_paid">Valores não pagos</string>
+    <string name="bill_prepaid">Valores pré-pago</string>
     <string name="bill_interest">Juros 7,75%</string>
     <string name="bill_items_values">VALORES EM R$</string>
     <string name="bill_payment_received">PAGAMENTO RECEBIDO</string>

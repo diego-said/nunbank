@@ -1,7 +1,8 @@
 package br.com.doublelogic.nubanktest.view.billing;
 
-import android.app.Fragment;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,9 +127,7 @@ public class BillInterfaceFragment extends Fragment {
                 billStatement.setVisibility(View.GONE);
                 billButtonPay.setVisibility(View.VISIBLE);
                 billButtonPay.setBackgroundResource(R.drawable.btn_default_blue_selector);
-                //TODO mudar a cor do texto do botão
-
-
+                billButtonPay.setTextColor(getResources().getColorStateList(R.color.btn_default_blue_text_selector));
 
                 billHeaderDesc.setText(String.format(getString(R.string.bill_open_desc), bill.getSummary().getClose_date()));
                 billHeaderDesc.setVisibility(View.VISIBLE);
@@ -138,11 +137,34 @@ public class BillInterfaceFragment extends Fragment {
                 billPaymentReceived.setVisibility(View.GONE);
                 billStatement.setVisibility(View.VISIBLE);
                 billButtonPay.setVisibility(View.VISIBLE);
+                billButtonPay.setBackgroundResource(R.drawable.btn_default_red_selector);
+                billButtonPay.setTextColor(getResources().getColorStateList(R.color.btn_default_red_text_selector));
 
                 if(bill.getSummary().getTotal_cumulative() > 0) {
+                    billStatementMonth.setVisibility(View.VISIBLE);
+                    billStatementMonthValue.setVisibility(View.VISIBLE);
 
+                    billStatementMonthValue.setText(df.format(bill.getSummary().getTotal_cumulative() / 100));
+                } else {
+                    billStatementMonth.setVisibility(View.GONE);
+                    billStatementMonthValue.setVisibility(View.GONE);
                 }
 
+                if(bill.getSummary().getPast_balance() != 0) {
+                    billNotPaid.setVisibility(View.VISIBLE);
+                    billNotPaidValue.setVisibility(View.VISIBLE);
+
+                    billNotPaidValue.setText(df.format(bill.getSummary().getPast_balance() / 100));
+
+                    if(bill.getSummary().getPast_balance() > 0) {
+                        billNotPaidValue.setText(R.string.bill_not_paid);
+                    } else {
+                        billNotPaidValue.setText(R.string.bill_prepaid);
+                    }
+                } else {
+                    billNotPaid.setVisibility(View.GONE);
+                    billNotPaidValue.setVisibility(View.GONE);
+                }
 
                 if(bill.getSummary().getInterest() > 0) {
                     billInterest.setVisibility(View.VISIBLE);
@@ -163,7 +185,6 @@ public class BillInterfaceFragment extends Fragment {
                 billPaymentReceivedValue.setText(df.format(bill.getSummary().getPaid()));
                 break;
         }
-
 
     }
 

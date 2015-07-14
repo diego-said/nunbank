@@ -4,13 +4,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/loadingBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/triangle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
+        android:textSize="20sp"
         android:textColor="@color/bill_red"
         android:text="&#9650;"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/loadingBar"/>
+
+    <br.com.doublelogic.nubanktest.view.util.HackyViewPager
+        android:id="@+id/billingPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/triangle">
+    </br.com.doublelogic.nubanktest.view.util.HackyViewPager>
 
 </RelativeLayout>
