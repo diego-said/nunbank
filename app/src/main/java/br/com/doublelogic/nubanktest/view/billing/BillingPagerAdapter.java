@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -48,7 +51,12 @@ public class BillingPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return StringUtils.upperCase(sdf.format(billsList.get(position).getSummary().getClose_date()));
+        Bill bill = billsList.get(position);
+        BillState billState = BillState.getBillState(bill.getState());
+        String title = StringUtils.upperCase(sdf.format(bill.getSummary().getClose_date()));
+        Spannable spannable = new SpannableString(title);
+        spannable.setSpan(new ForegroundColorSpan(context.getResources().getColor(billState.getColorId())), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
     }
 
     public void setBillsList(List<Bill> billsList) {

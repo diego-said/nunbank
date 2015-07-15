@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.crashlytics.android.Crashlytics;
 
 import org.apache.commons.lang3.StringUtils;
@@ -65,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if(listBills != null && listBills.size() > 0) {
+                if (listBills != null && listBills.size() > 0) {
                     Bill bill = listBills.get(position);
                     BillState billState = BillState.getBillState(bill.getState());
                     triangle.setTextColor(getResources().getColor(billState.getColorId()));
@@ -76,6 +79,15 @@ public class MainActivity extends ActionBarActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        final PagerTabStrip strip = PagerTabStrip.class.cast(findViewById(R.id.pager_tab_strip));
+        strip.setTabIndicatorColorResource(android.R.color.white);
+        strip.setBackgroundColor(getResources().getColor(android.R.color.white));
+        strip.setTextColor(getResources().getColor(R.color.bill_item_text));
+        strip.setNonPrimaryAlpha(0.5f);
+        strip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        strip.setTextSpacing(0);
+
     }
 
     @Override
