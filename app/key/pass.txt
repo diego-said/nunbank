@@ -1,0 +1,4 @@
+key pass: nubank10@
+
+alias: nubank
+pass: nubank10@
