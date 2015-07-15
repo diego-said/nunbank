@@ -96,7 +96,9 @@ public class BillInterfaceFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        final BillState billState = BillState.getBillState(bill.getState());
+        BillState billState = BillState.UNKNOWN;
+        if(bill != null)
+            billState = BillState.getBillState(bill.getState());
 
         billHeaderValue.setText("R$ " + df.format(bill.getSummary().getTotal_balance().doubleValue() / 100));
         billHeaderDueDate.setText(String.format(getString(R.string.bill_due_date_desc), StringUtils.upperCase(sdf.format(bill.getSummary().getDue_date()))));

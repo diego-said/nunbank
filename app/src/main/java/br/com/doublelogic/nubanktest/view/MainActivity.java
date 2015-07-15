@@ -14,7 +14,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.crashlytics.android.Crashlytics;
 
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +40,9 @@ public class MainActivity extends ActionBarActivity {
 
     private TextView triangle;
 
+    private View errRoot;
+    private TextView errMessage;
+
     private ViewPager billingPager;
     private BillingPagerAdapter billingPagerAdapter;
 
@@ -56,6 +58,10 @@ public class MainActivity extends ActionBarActivity {
 
         loadingBar = findViewById(R.id.loadingBar);
         triangle = (TextView) findViewById(R.id.triangle);
+
+        errRoot = findViewById(R.id.errRoot);
+        errMessage = (TextView) findViewById(R.id.errMessage);
+        errRoot.setVisibility(View.GONE);
 
         billingPagerAdapter = new BillingPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
@@ -108,19 +114,32 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.COMMON.INTERN_PROBLEM, intent.getAction())) {
-                // do something
+                loadingBar.setVisibility(View.GONE);
+                errRoot.setVisibility(View.VISIBLE);
+                errMessage.setText(R.string.err_common);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.COMMON.INTERNET_PROBLEM, intent.getAction())) {
-                // do something
+                loadingBar.setVisibility(View.GONE);
+                errRoot.setVisibility(View.VISIBLE);
+                errMessage.setText(R.string.err_internet);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.REST.CONNECTION_PROBLEM, intent.getAction())) {
-                // do something
+                loadingBar.setVisibility(View.GONE);
+                errRoot.setVisibility(View.VISIBLE);
+                errMessage.setText(R.string.err_common);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.REST.HTTP_400_ERROR, intent.getAction())) {
-                // do something
+                loadingBar.setVisibility(View.GONE);
+                errRoot.setVisibility(View.VISIBLE);
+                errMessage.setText(R.string.err_http_400);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.REST.HTTP_500_ERROR, intent.getAction())) {
-                // do something
+                loadingBar.setVisibility(View.GONE);
+                errRoot.setVisibility(View.VISIBLE);
+                errMessage.setText(R.string.err_http_500);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.REST.JSON_PARSER_ERROR, intent.getAction())) {
-                // do something
+                loadingBar.setVisibility(View.GONE);
+                errRoot.setVisibility(View.VISIBLE);
+                errMessage.setText(R.string.err_common);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.SERVICE.PRE_EXECUTE_LIST_BILLS, intent.getAction())) {
                 loadingBar.setVisibility(View.VISIBLE);
+                errRoot.setVisibility(View.GONE);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.SERVICE.POST_EXECUTE_LIST_BILLS, intent.getAction())) {
                 loadingBar.setVisibility(View.GONE);
 
