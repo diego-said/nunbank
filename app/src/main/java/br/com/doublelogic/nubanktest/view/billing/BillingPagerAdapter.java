@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class BillingPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return sdf.format(billsList.get(position).getSummary().getOpen_date());
+        return StringUtils.upperCase(sdf.format(billsList.get(position).getSummary().getClose_date()));
     }
 
     public void setBillsList(List<Bill> billsList) {

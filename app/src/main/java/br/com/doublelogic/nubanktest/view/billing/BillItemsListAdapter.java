@@ -114,10 +114,10 @@ public class BillItemsListAdapter extends BaseAdapter {
                 billItemValue.setTextColor(context.getResources().getColor(R.color.bill_item_text));
             }
 
-            billItemDate.setText(StringUtils.leftPad(sdf.format(billItem.getPost_date()), 6, " "));
+            billItemDate.setText(StringUtils.upperCase(sdf.format(billItem.getPost_date())));
 
             StringBuilder itemTitle = new StringBuilder(StringUtils.trim(billItem.getTitle()));
-            if(billItem.getCharges() > 1) {
+            if(billItem.getCharges() != null && billItem.getCharges() > 1) {
                 itemTitle.append(" ");
                 itemTitle.append(billItem.getIndex() + 1);
                 itemTitle.append("/");
@@ -125,7 +125,7 @@ public class BillItemsListAdapter extends BaseAdapter {
             }
             billItemDesc.setText(itemTitle.toString());
 
-            billItemValue.setText(df.format(billItem.getAmount() / 100));
+            billItemValue.setText(df.format(billItem.getAmount().doubleValue() / 100));
         }
 
     }

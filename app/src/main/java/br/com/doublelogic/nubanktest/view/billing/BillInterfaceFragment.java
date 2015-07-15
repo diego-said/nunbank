@@ -1,6 +1,5 @@
 package br.com.doublelogic.nubanktest.view.billing;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +9,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -97,12 +98,12 @@ public class BillInterfaceFragment extends Fragment {
 
         final BillState billState = BillState.getBillState(bill.getState());
 
-        billHeaderValue.setText(df.format(bill.getSummary().getTotal_balance() / 100));
-        billHeaderDueDate.setText(sdf.format(bill.getSummary().getDue_date()));
+        billHeaderValue.setText("R$ " + df.format(bill.getSummary().getTotal_balance().doubleValue() / 100));
+        billHeaderDueDate.setText(String.format(getString(R.string.bill_due_date_desc), StringUtils.upperCase(sdf.format(bill.getSummary().getDue_date()))));
         billHeaderDesc.setVisibility(View.GONE);
 
-        String dtOpen = sdf.format(bill.getSummary().getOpen_date());
-        String dtClose = sdf.format(bill.getSummary().getClose_date());
+        String dtOpen = StringUtils.upperCase(sdf.format(bill.getSummary().getOpen_date()));
+        String dtClose = StringUtils.upperCase(sdf.format(bill.getSummary().getClose_date()));
         String billDateRange = String.format(getString(R.string.bill_date_range), dtOpen, dtClose);
         billItemDateRange.setText(billDateRange);
 
@@ -124,13 +125,26 @@ public class BillInterfaceFragment extends Fragment {
 
             case OPEN:
                 billPaymentReceived.setVisibility(View.GONE);
-                billStatement.setVisibility(View.GONE);
                 billButtonPay.setVisibility(View.VISIBLE);
                 billButtonPay.setBackgroundResource(R.drawable.btn_default_blue_selector);
                 billButtonPay.setTextColor(getResources().getColorStateList(R.color.btn_default_blue_text_selector));
 
-                billHeaderDesc.setText(String.format(getString(R.string.bill_open_desc), bill.getSummary().getClose_date()));
+                billHeaderDesc.setText(String.format(getString(R.string.bill_open_desc), StringUtils.upperCase(sdf.format(bill.getSummary().getClose_date()))));
                 billHeaderDesc.setVisibility(View.VISIBLE);
+
+                if(bill.getSummary().getTotal_cumulative() > 0) {
+                    billStatement.setVisibility(View.VISIBLE);
+                    billStatementMonth.setVisibility(View.VISIBLE);
+                    billStatementMonthValue.setVisibility(View.VISIBLE);
+                    billStatementMonthValue.setText("R$ " + df.format(bill.getSummary().getTotal_cumulative().doubleValue() / 100));
+
+                    billNotPaid.setVisibility(View.GONE);
+                    billNotPaidValue.setVisibility(View.GONE);
+                    billInterest.setVisibility(View.GONE);
+                    billInterestValue.setVisibility(View.GONE);
+                } else {
+                    billStatement.setVisibility(View.GONE);
+                }
                 break;
 
             case CLOSED:
@@ -144,7 +158,7 @@ public class BillInterfaceFragment extends Fragment {
                     billStatementMonth.setVisibility(View.VISIBLE);
                     billStatementMonthValue.setVisibility(View.VISIBLE);
 
-                    billStatementMonthValue.setText(df.format(bill.getSummary().getTotal_cumulative() / 100));
+                    billStatementMonthValue.setText("R$ " + df.format(bill.getSummary().getTotal_cumulative().doubleValue() / 100));
                 } else {
                     billStatementMonth.setVisibility(View.GONE);
                     billStatementMonthValue.setVisibility(View.GONE);
@@ -154,7 +168,7 @@ public class BillInterfaceFragment extends Fragment {
                     billNotPaid.setVisibility(View.VISIBLE);
                     billNotPaidValue.setVisibility(View.VISIBLE);
 
-                    billNotPaidValue.setText(df.format(bill.getSummary().getPast_balance() / 100));
+                    billNotPaidValue.setText("R$ " + df.format(bill.getSummary().getPast_balance().doubleValue() / 100));
 
                     if(bill.getSummary().getPast_balance() > 0) {
                         billNotPaidValue.setText(R.string.bill_not_paid);
@@ -170,7 +184,7 @@ public class BillInterfaceFragment extends Fragment {
                     billInterest.setVisibility(View.VISIBLE);
                     billInterestValue.setVisibility(View.VISIBLE);
 
-                    billInterestValue.setText(df.format(bill.getSummary().getInterest() / 100));
+                    billInterestValue.setText("R$ " + df.format(bill.getSummary().getInterest().doubleValue() / 100));
                 } else {
                     billInterest.setVisibility(View.GONE);
                     billInterestValue.setVisibility(View.GONE);
@@ -182,9 +196,11 @@ public class BillInterfaceFragment extends Fragment {
                 billStatement.setVisibility(View.GONE);
                 billButtonPay.setVisibility(View.GONE);
 
-                billPaymentReceivedValue.setText(df.format(bill.getSummary().getPaid()));
+                billPaymentReceivedValue.setText("R$ " + df.format(bill.getSummary().getPaid().doubleValue() / 100));
                 break;
         }
+
+        listAdapter.setBillItemList(Arrays.asList(bill.getLine_items()));
 
     }
 

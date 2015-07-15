@@ -26,13 +26,18 @@
         android:textColor="@color/bill_red"
         android:text="&#9650;"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/loadingBar"/>
+        android:layout_below="@+id/loadingBar"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:textScaleX="2.0"/>
 
     <br.com.doublelogic.nubanktest.view.util.HackyViewPager
         android:id="@+id/billingPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/triangle">
+        android:layout_marginTop="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/loadingBar">
     </br.com.doublelogic.nubanktest.view.util.HackyViewPager>
 
 </RelativeLayout>

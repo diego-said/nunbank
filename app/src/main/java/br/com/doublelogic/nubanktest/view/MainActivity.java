@@ -16,10 +16,17 @@ import com.crashlytics.android.Crashlytics;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.doublelogic.nubanktest.R;
+import br.com.doublelogic.nubanktest.rest.bean.Bill;
 import br.com.doublelogic.nubanktest.service.BillingService;
 import br.com.doublelogic.nubanktest.service.util.LocalBroadcastMessages;
+import br.com.doublelogic.nubanktest.service.util.ServiceKeys;
 import br.com.doublelogic.nubanktest.util.LogUtil;
+import br.com.doublelogic.nubanktest.view.billing.BillState;
 import br.com.doublelogic.nubanktest.view.billing.BillingPagerAdapter;
 import io.fabric.sdk.android.Fabric;
 
@@ -34,13 +41,18 @@ public class MainActivity extends ActionBarActivity {
     private ViewPager billingPager;
     private BillingPagerAdapter billingPagerAdapter;
 
+    private List<Bill> listBills;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
+        listBills = new ArrayList<>();
+
         loadingBar = findViewById(R.id.loadingBar);
+        triangle = (TextView) findViewById(R.id.triangle);
 
         billingPagerAdapter = new BillingPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
@@ -53,7 +65,11 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onPageSelected(int position) {
-                //setMatchDate(position);
+                if(listBills != null && listBills.size() > 0) {
+                    Bill bill = listBills.get(position);
+                    BillState billState = BillState.getBillState(bill.getState());
+                    triangle.setTextColor(getResources().getColor(billState.getColorId()));
+                }
             }
 
             @Override
@@ -95,6 +111,25 @@ public class MainActivity extends ActionBarActivity {
                 loadingBar.setVisibility(View.VISIBLE);
             } else if (StringUtils.equalsIgnoreCase(LocalBroadcastMessages.SERVICE.POST_EXECUTE_LIST_BILLS, intent.getAction())) {
                 loadingBar.setVisibility(View.GONE);
+
+                Bundle bundle = intent.getBundleExtra(ServiceKeys.EXTRA_BUNDLE_KEY);
+                if (bundle != null) {
+                    Serializable rawResult = bundle.getSerializable(ServiceKeys.RESULT_KEY);
+                    if (rawResult != null) {
+                        ArrayList<Bill> listBills = (ArrayList) rawResult;
+
+                        MainActivity.this.listBills.clear();
+                        MainActivity.this.listBills.addAll(listBills);
+
+                        if(listBills != null && listBills.size() > 0) {
+                            Bill bill = listBills.get(0);
+                            BillState billState = BillState.getBillState(bill.getState());
+                            triangle.setTextColor(getResources().getColor(billState.getColorId()));
+                        }
+
+                        billingPagerAdapter.setBillsList(listBills);
+                    }
+                }
             }
             Log.d("receiver", "Got message: " + intent.getAction());
         }

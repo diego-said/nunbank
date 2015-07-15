@@ -10,6 +10,6 @@
     <color name="bill_item_highlight">#c9c9c9</color>
     <color name="bill_item_text">#a6a6a6</color>
     <color name="bill_item_date">#dedede</color>
-    <color name="bill_item_background">#f5f5f5</color>
+    <color name="bill_item_background">#fff</color>
 
 </resources>
