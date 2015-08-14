@@ -3,7 +3,7 @@
     <string name="app_name">NubankTest</string>
 
     <!-- Backend -->
-    <string name="backend_api">https://s3-sa-east-1.amazonaws.com/mobile-challenge/bill/bill_new.json</string>
+    <string name="backend_api">http://doublelogic.com.br/android/nubank/bill_new.json</string>
 
     <string name="bill_due_date_desc">Vencimento %s</string>
     <string name="bill_date_range">DE %1$s ATÉ %2$s</string>
